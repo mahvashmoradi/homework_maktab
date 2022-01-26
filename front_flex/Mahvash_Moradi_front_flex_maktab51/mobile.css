@@ -1,0 +1,27 @@
+@media only screen and (max-width:600px) {
+    
+
+    
+
+
+#features {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+    .box {
+  
+      display: flex;
+     padding: 50px;
+    text-align:center;
+    /* align-items: baseline; */
+    flex-direction: column;
+    
+  }
+   .box-b{
+      margin: auto;
+    }
+#ul-form :last-child{
+        display: none;
+      }
+}

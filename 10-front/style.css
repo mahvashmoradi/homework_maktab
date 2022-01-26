@@ -1,0 +1,16 @@
+nav a{
+color: white;
+/*border: 50px solid red;*/
+/*text-align: right;*/
+text-decoration-line: none;
+/*border-color: yellow;*/
+padding: 20px;
+margin: 20px;
+}
+
+nav{
+	background-color: blue;
+}
+nav text{
+	margin-right: 350px;
+}

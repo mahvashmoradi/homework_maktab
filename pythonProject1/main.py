@@ -1,0 +1,6 @@
+reader = open('test.txt')
+#print(reader.read())
+print(reader.readline())
+print(reader.readline())
+print(reader.readline())
+print(reader.readline())

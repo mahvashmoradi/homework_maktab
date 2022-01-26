@@ -1,0 +1,40 @@
+1)
+db.data.find({"dob.age" :{"$gt":50},"location.city":"گلستان"},{"name.first":1,"name.last":1}).pretty()
+db.data.find({$and:[{"dob.age":{$gt:50}},{"location.city":"گلستان"}]},{"name.first":1,"name.last":1}).pretty()
+
+2)
+db.data.find({"registered.age" :{"$gt":10}},{"name.last":1,"phone":1,"location.city":1,"location.street":1}).pretty()
+
+
+3)db.data.find(
+   "$expr": { 
+       "$and": [
+            { "$eq": [ { "$dayOfMonth": "$dob.date" }, { "$dayOfMonth": new Date() } ] },
+            { "$eq": [ { "$month"     : "$dob.date" }, { "$month"     : new Date() } ] }
+       ]
+    })
+
+4)
+db.data.aggregate([{$group:{_id:"$location.state"},count: { $sum: 1 }}])
+
+5)
+db.data.aggregate([{$group:{_id:"$location.state",count: { $sum: 1 }}},{$sort:{"count":-1}}])
+db.data.aggregate([{$group:{_id:"$location.state",count: { $sum: 1 }}},{$sort:{"count":1}},{$limit:1}])
+
+ 
+6) 
+db.data.aggregate([{$match:{"location.city":{$nin:["تهران"]}}}, {$group:{_id:null,ave: { $avg: "$dob.age" }}}]) 
+db.data.aggregate([{$match:{"location.city":{$in:["تهران"]}}}, {$group:{_id:null,ave: { $avg: "$dob.age" }}}])
+  
+db.data.aggregate([{$facet:{"a":[{$match:{"location.city":{$in:["تهران"]}}}, {$group:{_id:null,ave: { $avg: "$dob.age" }}}],
+"b":[{$match:{"location.city":{$nin:["تهران"]}}}, {$group:{_id:null,ave: { $avg: "$dob.age" }}}]}},{$project:{result:{"$cmp":["$a.ave","$b.ave"]}}}])
+
+7)
+db.data.aggregate([{$bucket:{
+  groupBy: "$dob.age",
+  boundaries: [0, 25,40],
+  default: "old",
+  output: {
+     outputN: { $push:{"name":"name.first","age":"$dob.age" }}
+  }
+}}])
